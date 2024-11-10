@@ -28,7 +28,10 @@
                     <button class="btn btn-secondary" (click)="onEdit(item)">
                       Edit
                     </button>
-                    <button class="btn btn-danger mx-2" (click)="onDelete()">
+                    <button
+                      class="btn btn-danger mx-2"
+                      (click)="onDelete(item.empId)"
+                    >
                       Delete
                     </button>
                   </td>
@@ -50,6 +53,12 @@
             <div class="col-12">
               <label for="">Name</label>
               <input type="text" formControlName="name" class="form-control" />
+              <div class="text-danger">
+                @if(employeeForm.controls['name'].touched) {
+                @if(employeeForm.controls['name'].errors?.['required']) {
+                <span>Name IS Required</span>
+                } }
+              </div>
             </div>
             <div class="col-6">
               <label for="">Email-Id</label>
@@ -82,6 +91,14 @@
                 formControlName="pinCode"
                 class="form-control"
               />
+              <div class="text-danger">
+                @if(employeeForm.controls['pinCode'].touched) {
+                @if(employeeForm.controls['pinCode'].errors?.['required']){
+                <span>Pin Code IS Required</span>
+                } @if(employeeForm.controls['pinCode'].errors?.['minlength']){
+                <span>Min 6 characters required.</span>
+                } }
+              </div>
             </div>
             <div class="col-12">
               <label for="">Address</label>

@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+
 import { EmployeeModel } from './model/Employee';
 
 @Component({
@@ -30,13 +36,16 @@ export class AppComponent {
   createForm() {
     this.employeeForm = new FormGroup({
       empId: new FormControl(this.employeeObj.empId),
-      name: new FormControl(this.employeeObj.name),
+      name: new FormControl(this.employeeObj.name, [Validators.required]),
       city: new FormControl(this.employeeObj.city),
       state: new FormControl(this.employeeObj.state),
       emailId: new FormControl(this.employeeObj.emailId),
       contactNumber: new FormControl(this.employeeObj.contactNumber),
       address: new FormControl(this.employeeObj.address),
-      pinCode: new FormControl(this.employeeObj.pinCode),
+      pinCode: new FormControl(this.employeeObj.pinCode, [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
 
@@ -79,7 +88,14 @@ export class AppComponent {
     this.createForm();
   }
 
-  onDelete() {
-    console.log('Delete button was clicked.');
+  onDelete(id: number) {
+    // console.log('Delete button was clicked.');
+    const isDelete = confirm('Are you sure you want to delete?');
+
+    if (isDelete) {
+      const index = this.employeeList.findIndex((m) => m.empId == id);
+      this.employeeList.splice(index, 1);
+      localStorage.setItem('EmpData', JSON.stringify(this.employeeList));
+    }
   }
 }
