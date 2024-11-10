@@ -51,5 +51,35 @@ export class AppComponent {
       this.employeeList.unshift(this.employeeForm.value);
     }
     localStorage.setItem('EmpData', JSON.stringify(this.employeeList));
+    this.employeeObj = new EmployeeModel();
+    this.createForm();
+  }
+
+  onUpdate() {
+    const record = this.employeeList.find(
+      (m) => m.empId == this.employeeForm.controls['empId'].value
+    );
+    if (record != undefined) {
+      record.address = this.employeeForm.controls['address'].value;
+      record.name = this.employeeForm.controls['name'].value;
+      record.contactNumber = this.employeeForm.controls['contactNumber'].value;
+      record.emailId = this.employeeForm.controls['emailId'].value;
+    }
+    localStorage.setItem('EmpData', JSON.stringify(this.employeeList));
+    this.employeeObj = new EmployeeModel();
+    this.createForm();
+  }
+
+  onEdit(item: EmployeeModel) {
+    // console.log(
+    //   `Edit button was clicked and this is the object we are about to edit:`
+    // );
+    // console.log((this.employeeObj = item));
+    this.employeeObj = item;
+    this.createForm();
+  }
+
+  onDelete() {
+    console.log('Delete button was clicked.');
   }
 }
