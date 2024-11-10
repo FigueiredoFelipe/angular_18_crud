@@ -114,7 +114,11 @@
             </div>
             <div class="col-6 text-center">
               @if (employeeForm.controls['empId'].value == '1') {
-              <button class="btn btn-success" (click)="onSave()">
+              <button
+                class="btn btn-success"
+                [disabled]="employeeForm.invalid"
+                (click)="onSave()"
+              >
                 Save Employee
               </button>
               } @else {
