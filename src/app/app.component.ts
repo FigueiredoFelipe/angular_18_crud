@@ -15,8 +15,16 @@ export class AppComponent {
 
   employeeObj: EmployeeModel = new EmployeeModel();
 
+  employeeList: EmployeeModel[] = [];
+
   constructor() {
     this.createForm();
+    // debugger;
+    const oldData = localStorage.getItem('EmpData');
+    if (oldData != null) {
+      const parseData = JSON.parse(oldData);
+      this.employeeList = parseData;
+    }
   }
 
   createForm() {
@@ -30,5 +38,18 @@ export class AppComponent {
       address: new FormControl(this.employeeObj.address),
       pinCode: new FormControl(this.employeeObj.pinCode),
     });
+  }
+
+  onSave() {
+    // debugger;
+    const oldData = localStorage.getItem('EmpData');
+    if (oldData != null) {
+      const parseData = JSON.parse(oldData);
+      this.employeeForm.controls['empId'].setValue(parseData.length + 1);
+      this.employeeList.unshift(this.employeeForm.value);
+    } else {
+      this.employeeList.unshift(this.employeeForm.value);
+    }
+    localStorage.setItem('EmpData', JSON.stringify(this.employeeList));
   }
 }
