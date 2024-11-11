@@ -39,7 +39,10 @@ export class AppComponent {
       name: new FormControl(this.employeeObj.name, [Validators.required]),
       city: new FormControl(this.employeeObj.city),
       state: new FormControl(this.employeeObj.state),
-      emailId: new FormControl(this.employeeObj.emailId),
+      emailId: new FormControl(this.employeeObj.emailId, [
+        Validators.required,
+        Validators.email,
+      ]),
       contactNumber: new FormControl(this.employeeObj.contactNumber),
       address: new FormControl(this.employeeObj.address),
       pinCode: new FormControl(this.employeeObj.pinCode, [
@@ -47,6 +50,11 @@ export class AppComponent {
         Validators.minLength(6),
       ]),
     });
+  }
+
+  onReset() {
+    this.employeeObj = new EmployeeModel();
+    this.createForm();
   }
 
   onSave() {
@@ -60,8 +68,7 @@ export class AppComponent {
       this.employeeList.unshift(this.employeeForm.value);
     }
     localStorage.setItem('EmpData', JSON.stringify(this.employeeList));
-    this.employeeObj = new EmployeeModel();
-    this.createForm();
+    this.onReset();
   }
 
   onUpdate() {
@@ -75,8 +82,7 @@ export class AppComponent {
       record.emailId = this.employeeForm.controls['emailId'].value;
     }
     localStorage.setItem('EmpData', JSON.stringify(this.employeeList));
-    this.employeeObj = new EmployeeModel();
-    this.createForm();
+    this.onReset();
   }
 
   onEdit(item: EmployeeModel) {

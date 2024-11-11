@@ -67,6 +67,14 @@
                 formControlName="emailId"
                 class="form-control"
               />
+              <div class="text-danger">
+                @if(employeeForm.controls['emailId'].touched) {
+                @if(employeeForm.controls['emailId'].errors?.['required']){
+                <span>An email is required.</span>
+                } @if(employeeForm.controls['emailId'].errors?.['email']){
+                <span>Please insert a valid email.</span>
+                } }
+              </div>
             </div>
             <div class="col-6">
               <label for="">Contact No</label>
@@ -110,19 +118,30 @@
           </div>
           <div class="row pt-2">
             <div class="col-6 text-center">
-              <button class="btn btn-secondary">Reset</button>
+              <button
+                class="btn btn-secondary"
+                type="button"
+                (click)="onReset()"
+              >
+                Reset
+              </button>
             </div>
             <div class="col-6 text-center">
               @if (employeeForm.controls['empId'].value == '1') {
               <button
                 class="btn btn-success"
+                type="button"
                 [disabled]="employeeForm.invalid"
                 (click)="onSave()"
               >
                 Save Employee
               </button>
               } @else {
-              <button class="btn btn-warning" (click)="onUpdate()">
+              <button
+                class="btn btn-warning"
+                type="button"
+                (click)="onUpdate()"
+              >
                 Update Employee
               </button>
               }
