@@ -23,9 +23,14 @@ export class AppComponent {
 
   employeeList: EmployeeModel[] = [];
 
+  isEditing = false;
+
   constructor() {
     this.createForm();
     // debugger;
+
+    this.isEditing = false;
+
     const oldData = localStorage.getItem('EmpData');
     if (oldData != null) {
       const parseData = JSON.parse(oldData);
@@ -58,7 +63,7 @@ export class AppComponent {
   }
 
   onSave() {
-    // debugger;
+    debugger;
     const oldData = localStorage.getItem('EmpData');
     if (oldData != null) {
       const parseData = JSON.parse(oldData);
@@ -83,20 +88,17 @@ export class AppComponent {
     }
     localStorage.setItem('EmpData', JSON.stringify(this.employeeList));
     this.onReset();
+    this.isEditing = false;
   }
 
   onEdit(item: EmployeeModel) {
-    // console.log(
-    //   `Edit button was clicked and this is the object we are about to edit:`
-    // );
-    // console.log((this.employeeObj = item));
     console.log(item);
+    this.isEditing = true;
     this.employeeObj = item;
     this.createForm();
   }
 
   onDelete(id: number) {
-    // console.log('Delete button was clicked.');
     const isDelete = confirm('Are you sure you want to delete?');
 
     if (isDelete) {
