@@ -90,6 +90,7 @@ export class AppComponent {
     //   `Edit button was clicked and this is the object we are about to edit:`
     // );
     // console.log((this.employeeObj = item));
+    console.log(item);
     this.employeeObj = item;
     this.createForm();
   }
